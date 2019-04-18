@@ -1,4 +1,4 @@
-# lab-5-javawarrio
+# lab-5-Luqi
 
 ## Project setup
 ```
