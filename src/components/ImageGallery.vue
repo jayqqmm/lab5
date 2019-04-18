@@ -2,16 +2,17 @@
 <div id="photo">
   <div class="image" v-for="photo in photos" v-bind:key="photo._id">
 
-  <div @click="clickMethod(photo)">
-    <img :src="photo.path" />
+    <a href=/photo v-on:click.prevent="clickMethod(photo)">
+    <img :src="photo.path"/>
+    </a>
     <p class="photoTitle">{{photo.title}}</p>
+    <p>{{photo.comment}}</p>
     <p class="photoDate">
-  <span v-if="photo.user.name">{{photo.user.name}}, </span>
-  {{formatDate(photo.created)}}
+    {{formatDate(photo.created)}}
     </p>
-    <p>{{photo.description}}</p>
-  </div>
   <form>
+  <input v-model="photo.comment">
+  <button v-on:click.prevent="editItem(photo)">Edit</button>
   <button v-on:click.prevent="deleteMeal(photo)">Delete</button>
   </form>
   </div>
@@ -34,17 +35,17 @@ export default {
        return moment(date).format('d MMMM YYYY');
    },
    clickMethod(photo) {
-      this.$store.commit("setPhotoId",photo);
-
+      this.$store.dispatch("myMeals",photo.title);
         this.$router.push('photo');
     },
-
   async deleteMeal(photo){
         this.$store.dispatch("deleteMeal", photo._id);
         this.$store.dispatch("getMeals");
-  }
+  },
+  async editItem(photo){
+         this.$store.dispatch("editMeal", photo);
+  },
  },
-
 }
 </script>
 
@@ -54,12 +55,13 @@ export default {
 }
 .photoTitle {
   margin: 0px;
-  font-size: 1.2em;
+  font-size: 2.5em;
+  color: blue;
 }
 
 .photoDate {
   margin: 0px;
-  font-size: 0.9em;
+  font-size: 0.7em;
   font-weight: normal;
 }
 

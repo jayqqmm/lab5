@@ -13,6 +13,7 @@ const mealSchema = new mongoose.Schema({
   },
   path: String,
   title: String,
+  comment: String,
   created: {
     type: Date,
     default: Date.now
@@ -27,7 +28,8 @@ router.post("/", auth.verifyToken, User.verify, async (req, res) => {
     const meal = new Meal({
     user: req.user,
     path: req.body.picture,
-    title: req.body.saveInf,
+    comment: req.body.saveInf,
+    title: req.body.mealName,
   });
   try {
     await meal.save();
@@ -67,6 +69,18 @@ router.get("/:id", async (req, res) => {
     console.log(error);
     return res.sendStatus(500);
   }
+});
+
+router.put("/:id",(req, res) => {
+    let id = req.params.id;
+    Meal.findOneAndUpdate({_id: id},
+    {$set: {"title":req.body.title,"comment":req.body.comment}},{returnNewDocument : true},
+    function(err, doc){
+    if(err){
+    res.sendStatus(500);
+    }
+    console.log(doc);
+});
 });
 
 router.delete("/:id", async (req, res) =>{

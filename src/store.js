@@ -33,6 +33,15 @@ export default new Vuex.Store({
         return error.response.data.message;
       }
     },
+    async myMeals(context, data) {
+      try {
+        let response = await axios.get('https://www.themealdb.com/api/json/v1/1/search.php?s=' + data);
+        context.commit('setMeals', response.data);
+        return "";
+      } catch (error) {
+        return error.response.data.message;
+      }
+    },
     async register(context, data) {
       try {
         let response = await axios.post("/api/users", data);
@@ -102,6 +111,18 @@ export default new Vuex.Store({
         let response = await axios.delete("api/meals/" + data);
       }catch (error) {
         return "";
+      }
+    },
+    async editMeal(context, data) {
+    try {
+        let response = await axios.put("/api/meals/" + data._id, {
+          title: data.title,
+          comment: data.comment,
+        });
+        context.commit('setMeal', response.data);
+        return "";
+      } catch (error) {
+        return error.response.data.message;
       }
     },
   }

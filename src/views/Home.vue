@@ -23,7 +23,11 @@
     <button v-on:click.prevent="previousComic(meals.meals[0]['idMeal'])">Previous</button>
     <button v-on:click.prevent="nextComic(meals.meals[0]['idMeal'])">Next</button>
     <div v-if="user">
-    <button v-on:click.prevent="saveMeal(meals)">Save</button>
+    <form v-on:submit.prevent="saveMeal(meals)">
+        <textarea v-model="saveInf"></textarea>
+        <br />
+        <button type="submit">Save</button>
+     </form>
     </div>
     <div v-else>
     <p>If you would like to save it, please register for an account or login.</p>
@@ -42,7 +46,7 @@ export default {
     data() {
       return {
       number: Number,
-      saveInf: String,
+      saveInf: '',
     }
     },
     computed: {
@@ -88,7 +92,7 @@ export default {
             let mealName = meals.meals[0]['strMeal'];
             let picture = meals.meals[0]['strMealThumb'];
             console.log(name);   
-            this.$store.dispatch("save",{saveInf: mealName, picture} );   
+            this.$store.dispatch("save",{saveInf: this.saveInf, mealName, picture} );   
         },
 
     }

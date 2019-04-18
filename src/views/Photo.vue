@@ -1,87 +1,46 @@
 <template>
-  <div class = "photo">
-  <img v-bind:src="photos.path" />
-  <p> {{photos.title}}</p>
-  <p> {{photos.description}}</p>
-  <p> {{photos.user.name}} </p>
-  {{formatDate(photos.created)}}
-
-<div v-if="user">
-<h3>Add a Comment</h3>
-      <form v-on:submit.prevent="addComment(photos, user)">
-        <textarea v-model="addedComment"></textarea>
-        <br />
-        <button type="submit">Comment</button>
-      </form>
-      <h3>Comments</h3>
-
-      <div v-for="comment in comments">
-
-        <span v-if="comment.photoID == photos._id" >
-        <hr>
-        {{comment.comment}}
-        <br>
-        {{formatDate(comment.created)}}
-        <br>
-        {{comment.photoUser}}
-        </span>
-
-
-      </div>
-      </div>
-
-
-  </div>
+  <div>
+     <h1 id="mealname">{{meals.meals[0]['strMeal']}}</h1>
+     <br>
+     <p><img v-bind:src="meals.meals[0]['strMealThumb']" height="580" width="700"></p>
+     <p>{{meals.meals[0]['strIngredient1']}} {{meals.meals[0]['strMeasure1']}}</p>
+     <p>{{meals.meals[0]['strIngredient2']}} {{meals.meals[0]['strMeasure2']}}</p>
+     <p>{{meals.meals[0]['strIngredient3']}} {{meals.meals[0]['strMeasure3']}}</p>
+     <p>{{meals.meals[0]['strIngredient4']}} {{meals.meals[0]['strMeasure4']}}</p>
+     <p>{{meals.meals[0]['strIngredient5']}} {{meals.meals[0]['strMeasure5']}}</p>
+     <p>{{meals.meals[0]['strIngredient6']}} {{meals.meals[0]['strMeasure6']}}</p> 
+     <p>{{meals.meals[0]['strIngredient7']}} {{meals.meals[0]['strMeasure7']}}</p>
+     <p>{{meals.meals[0]['strIngredient8']}} {{meals.meals[0]['strMeasure8']}}</p>
+     <p>{{meals.meals[0]['strIngredient9']}} {{meals.meals[0]['strMeasure9']}}</p>
+     <p>{{meals.meals[0]['strIngredient10']}} {{meals.meals[0]['strMeasure10']}}</p>
+     <p>{{meals.meals[0]['strIngredient11']}} {{meals.meals[0]['strMeasure11']}}</p>
+     <p>{{meals.meals[0]['strIngredient12']}} {{meals.meals[0]['strMeasure12']}}</p>
+     <p>{{meals.meals[0]['strIngredient13']}} {{meals.meals[0]['strMeasure13']}}</p>
+     <p>{{meals.meals[0]['strInstructions']}}</p>
+     <p> <a id="video" v-bind:href="meals.meals[0]['strYoutube']">Watch Video</a></p>
+   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import moment from 'moment';
-
 export default {
-  name: 'photo',
-  props: {
-    addedComment: String,
-    comments: {},
-  },
-  data() {
-  return{
-    addedComment: '',
-    }
-  },
-  components: {
-  },
   computed: {
-  user() {
-    return this.$store.state.user;
-  },
-    photos() {
-      return this.$store.state.photo1;
+    meals() {
+      return this.$store.state.meals;
     },
-    comments() {
-    return this.$store.state.comments;
-    }
-  },
-  async created() {
-    await this.$store.dispatch("getUser");
-    await this.$store.dispatch("getOnePhotos");
-    await this.$store.dispatch("getComments");
-  },
-  methods: {
-   formatDate(date) {
-     if (moment(date).diff(Date.now(), 'days') < 15)
-       return moment(date).fromNow();
-     else
-       return moment(date).format('d MMMM YYYY');
-   },
-   addComment(photos, user) {
-   let photoID = photos._id;
-   let photoUser = user.name;
-
-   this.$store.dispatch("addComment",{addedComment: this.addedComment, photoID, photoUser });
-
-   }
-
+ }
 }
-}
+
 </script>
+<style scoped>
+  #mealname{
+    color: red;
+    font-size:300%;
+  }
+  P{
+    font-size:140%;
+    text-align: center;
+  }
+  h1{
+    text-align: center;
+  }
+</style>
