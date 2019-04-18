@@ -1,5 +1,8 @@
 <template>
 <div>
+
+
+
      <h1 id="mealname">{{meals.meals[0]['strMeal']}}</h1>
      <br>
      <p><img v-bind:src="meals.meals[0]['strMealThumb']" height="580" width="700"></p>
